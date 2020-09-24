@@ -1,0 +1,51 @@
+﻿@page
+@model WebApplication15.Pages.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div>
+    <h1 class="display-4">Welcome user to the CDA Training Web App</h1>
+
+    <p class="text-center">
+        <img alt="" src="https://d1hbpr09pwz0sk.cloudfront.net/logo_url/critical-design-associates-inc-ab9cc379" class="center"/>
+    </p>
+
+    
+    <p>
+        
+    
+
+    <input id="Button1" type="button" value="Logout" onclick="window.location.href = 'https://localhost:44353/login'" /> 
+
+    </p>
+
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Request[0].username)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Request) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+                @Html.DisplayFor(modelItem => item.username)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.username">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.username">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.username">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
