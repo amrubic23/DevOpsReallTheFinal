@@ -20,7 +20,6 @@ namespace WebApplication15
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://192.168.0.26");
                     webBuilder.UseStartup<Startup>();
                 });
     }
