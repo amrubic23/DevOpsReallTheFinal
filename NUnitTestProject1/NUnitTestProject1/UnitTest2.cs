@@ -14,7 +14,7 @@ namespace NUnitTestProject1
         [SetUp]
         public void start_browser()
         {
-            driver = new FirefoxDriver();
+            driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
         }
 
