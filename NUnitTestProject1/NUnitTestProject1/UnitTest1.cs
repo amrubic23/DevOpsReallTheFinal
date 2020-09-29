@@ -31,7 +31,7 @@ namespace NUnitTestProject1
             IWebElement passName = driver.FindElement(By.Name("Pass"));
             passName.SendKeys("1234");
 
-            IWebElement loginButton = driver.FindElement(By.Id("btn1"));
+            IWebElement loginButton = driver.FindElement(By.Id("btn2"));
             loginButton.Click();
 
             //System.Threading.Thread.Sleep(5000);
