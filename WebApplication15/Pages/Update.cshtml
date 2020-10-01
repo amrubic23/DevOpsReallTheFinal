@@ -1,0 +1,25 @@
+﻿@page
+@model WebApplication15.Pages.UpdateModel
+@{
+}
+
+
+<div class="text-left">
+    <h1 class="display-4">CDA Training Web App!</h1>
+
+
+    <form method="post" asp-page="Update">
+        <div class="form-group">
+            <p>Current Password</p>
+            <p><input asp-for="Pass" id="Text1" type="password" asp-page-handler="Update"/></p>  
+            <p>New Password</p>
+            <p><input asp-for="newPass1" id="Text1" type="password" asp-page-handler="Update"/></p>
+            <p>Confirm New Password</p>
+            <p><input asp-for="newPass2" id="Text1" type="password" asp-page-handler="Update"/></p>
+         </div>
+            <p><button id="btn1" type="submit" class="btn btn-primary" asp-page-handler="Update">Update</button></p>
+
+    </form>
+
+
+</div>

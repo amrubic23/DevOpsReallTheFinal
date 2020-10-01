@@ -13,15 +13,18 @@
     <p class="text-center">
         
     
+    <form method="post" asp-page="Request">
+        <div class="form-group">
+        
+ 
+        <p><button type="submit" class="btn btn-primary" asp-page-handler="Request">Request Network Account</button></p>
 
-    <input id="Button1" type="button" value="Logout" onclick="window.location.href = 'https://localhost:44353/login'" /> 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-        <form method="post" asp-page="Request">
-            <div class="form-group">
+        <p><button type="submit" class="btn btn-primary" asp-page-handler="Update">Update Password</button></p>
+
+        <p><button type="submit" class="btn btn-primary" asp-page-handler="Logout">Logout</button></p> 
+
              </div>
-            <p><button type="submit" class="btn btn-primary">Request Network Account</button></p>
+            
         </form>
     </p>
 

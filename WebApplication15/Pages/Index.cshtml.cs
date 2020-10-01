@@ -19,12 +19,12 @@ namespace WebApplication15.Pages
             _context = context;
         }
 
-        /*public void OnGet()
+        public IActionResult OnPostLogout()
         {
-            if ((String)HttpContext.Session.GetString("username") != "admin")
-                Response.Redirect("Request");
-
-        }*/
+            HttpContext.Session.SetString("loggedin", "f");
+            HttpContext.Session.SetString("username", "");
+            return RedirectToPage("Login");
+        }
         public IList<Request> Request { get;set; }
 
         public async Task OnGetAsync()
@@ -32,6 +32,11 @@ namespace WebApplication15.Pages
             Request = await _context.Request.ToListAsync();
             if ((String)HttpContext.Session.GetString("username") != "admin")
                 Response.Redirect("Request");
+        }
+
+        public IActionResult OnPostUpdate()
+        {
+                return RedirectToPage("Update");
         }
     }
 }

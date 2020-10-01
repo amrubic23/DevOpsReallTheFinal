@@ -20,7 +20,18 @@ namespace WebApplication15.Pages
 
         }
 
-        public IActionResult OnPost()
+        public IActionResult OnPostLogout()
+        {
+            HttpContext.Session.SetString("loggedin", "f");
+            HttpContext.Session.SetString("username", "");
+            return RedirectToPage("Login");
+        }
+        public IActionResult OnPostUpdate()
+        {
+
+            return RedirectToPage("Update");
+        }
+        public IActionResult OnPostRequest()
         {
             String query = "INSERT INTO dbo.request (username,status) VALUES (@username, @status)";
             String connectionString = "Data Source=192.168.0.212;Initial Catalog=testDB;User ID=sa;Password=7v!SkU{r";

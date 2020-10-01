@@ -13,13 +13,23 @@
     </p>
 
     
-    <p>
-        
-    
+   
 
-    <input id="Button1" type="button" value="Logout" onclick="window.location.href = 'https://localhost:44353/login'" /> 
 
-    </p>
+
+    <form method="post" asp-page="Login">
+        <div class="form-group">
+
+         
+            <p><button id="btn1" type="submit" class="btn btn-primary" asp-page-handler="Logout">Logout</button></p>
+            <p><button type="submit" class="btn btn-primary" asp-page-handler="Update">Update Password</button></p>
+        </div>
+
+
+    </form>
+
+
+
 
 </div>
 
