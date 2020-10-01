@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebApplication15.Data;
 
+
 namespace WebApplication15
 {
     public class Startup
@@ -38,6 +39,7 @@ namespace WebApplication15
 
             services.AddDbContext<WebApplication15Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("RequestContext")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
