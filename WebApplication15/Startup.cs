@@ -10,8 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebApplication15.Data;
-using Microsoft.AspNetCore.Authentication.Certificate;
-using System.Security.Cryptography.X509Certificates;
+
 
 namespace WebApplication15
 {
@@ -27,25 +26,6 @@ namespace WebApplication15
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //new
-            services.AddCertificateForwarding(options =>
-            {
-                options.CertificateHeader = "X-SSL-CERT";
-                options.HeaderConverter = (headerValue) =>
-                {
-                    X509Certificate2 clientCertificate = null;
-
-                    if (!string.IsNullOrWhiteSpace(headerValue))
-                    {
-                        byte[] bytes = StringToByteArray(headerValue);
-                        clientCertificate = new X509Certificate2(bytes);
-                    }
-
-                    return clientCertificate;
-                };
-            });
-            //end new
-
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -79,12 +59,7 @@ namespace WebApplication15
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-
             app.UseRouting();
-            //new
-            app.UseCertificateForwarding();
-            app.UseAuthentication();
-            //end new
 
             app.UseAuthorization();
             
@@ -95,21 +70,5 @@ namespace WebApplication15
                 endpoints.MapRazorPages();
             });
         }
-
-        //new
-        private static byte[] StringToByteArray(string hex)
-        {
-            int NumberChars = hex.Length;
-            byte[] bytes = new byte[NumberChars / 2];
-
-            for (int i = 0; i < NumberChars; i += 2)
-            {
-                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-            }
-
-            return bytes;
-        }
-        //end new
-
     }
 }
