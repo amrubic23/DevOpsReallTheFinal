@@ -18,6 +18,10 @@ namespace WebApplication15.Pages
             if ((String)HttpContext.Session.GetString("username") == "admin")
                 Response.Redirect("Index");
 
+
+            HttpContext.Session.SetString("loggedin", "t");
+            HttpContext.Session.SetString("username", (String)HttpContext.Session.GetString("username"));
+
         }
 
         public IActionResult OnPostLogout()

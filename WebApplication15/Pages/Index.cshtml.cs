@@ -32,6 +32,9 @@ namespace WebApplication15.Pages
             Request = await _context.Request.ToListAsync();
             if ((String)HttpContext.Session.GetString("username") != "admin")
                 Response.Redirect("Request");
+
+            HttpContext.Session.SetString("loggedin", "t");
+            HttpContext.Session.SetString("username", (String)HttpContext.Session.GetString("username"));
         }
 
         public IActionResult OnPostUpdate()

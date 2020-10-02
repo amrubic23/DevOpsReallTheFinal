@@ -21,6 +21,9 @@ namespace WebApplication15.Pages
         {
             if (((String)HttpContext.Session.GetString("loggedin") != "t"))
                 Response.Redirect("login");
+
+            HttpContext.Session.SetString("loggedin", "t");
+            HttpContext.Session.SetString("username", (String)HttpContext.Session.GetString("username"));
         }
 
         public IActionResult OnPostUpdate([FromForm] string pass, [FromForm] string newpass1, [FromForm] string newpass2)
@@ -110,15 +113,10 @@ namespace WebApplication15.Pages
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        if (reader.Read())
-                        {
-                            return true;
-                        }
-                        else //incorrect login information
-                        {
+
                             connection2.Close();
-                            return false;
-                        }
+                            return true;
+                        
                     }
 
                 }
