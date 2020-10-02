@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebApplication15.Data;
 using Microsoft.AspNetCore.Authentication.Certificate;
+using System.Security.Cryptography.X509Certificates;
 
 namespace WebApplication15
 {
@@ -27,35 +28,24 @@ namespace WebApplication15
         public void ConfigureServices(IServiceCollection services)
         {
             //new
-            services.AddAuthentication(
-                CertificateAuthenticationDefaults.AuthenticationScheme)
-                .AddCertificate(options =>
+            services.AddCertificateForwarding(options =>
+            {
+                options.CertificateHeader = "X-SSL-CERT";
+                options.HeaderConverter = (headerValue) =>
                 {
-                    options.Events = new CertificateAuthenticationEvents
+                    X509Certificate2 clientCertificate = null;
+
+                    if (!string.IsNullOrWhiteSpace(headerValue))
                     {
-                        OnCertificateValidated = context =>
-                        {
-                            var validationService = context.HttpContext.RequestServices.GetService<MyCertificateValidationService>();
+                        byte[] bytes = StringToByteArray(headerValue);
+                        clientCertificate = new X509Certificate2(bytes);
+                    }
 
-                            if (validationService.ValidateCertificate(context.ClientCertificate))
-                            {
-                                context.Success();
-                            }
-                            else
-                            {
-                                context.Fail("invalid cert");
-                            }
-
-                            return Task.CompletedTask;
-                        },
-                        OnAuthenticationFailed = context =>
-                        {
-                            context.Fail("invalid cert");
-                            return Task.CompletedTask;
-                        }
-                    };
-                });
+                    return clientCertificate;
+                };
+            });
             //end new
+
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -89,12 +79,12 @@ namespace WebApplication15
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
+            app.UseRouting();
             //new
             app.UseCertificateForwarding();
             app.UseAuthentication();
             //end new
-
-            app.UseRouting();
 
             app.UseAuthorization();
             
@@ -105,5 +95,21 @@ namespace WebApplication15
                 endpoints.MapRazorPages();
             });
         }
+
+        //new
+        private static byte[] StringToByteArray(string hex)
+        {
+            int NumberChars = hex.Length;
+            byte[] bytes = new byte[NumberChars / 2];
+
+            for (int i = 0; i < NumberChars; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            }
+
+            return bytes;
+        }
+        //end new
+
     }
 }

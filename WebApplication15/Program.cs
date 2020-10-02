@@ -22,13 +22,7 @@ namespace WebApplication15
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureKestrel(options =>
-                    {
-                        options.ConfigureHttpsDefaults(opt =>
-                            opt.ClientCertificateMode =
-                                ClientCertificateMode.RequireCertificate);
-                    });
-                    
+
                 });
     }
 }
