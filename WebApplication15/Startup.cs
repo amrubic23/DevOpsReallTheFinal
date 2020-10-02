@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebApplication15.Data;
-
+using Microsoft.AspNetCore.Authentication.Certificate;
 
 namespace WebApplication15
 {
@@ -26,6 +26,36 @@ namespace WebApplication15
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //new
+            services.AddAuthentication(
+                CertificateAuthenticationDefaults.AuthenticationScheme)
+                .AddCertificate(options =>
+                {
+                    options.Events = new CertificateAuthenticationEvents
+                    {
+                        OnCertificateValidated = context =>
+                        {
+                            var validationService = context.HttpContext.RequestServices.GetService<MyCertificateValidationService>();
+
+                            if (validationService.ValidateCertificate(context.ClientCertificate))
+                            {
+                                context.Success();
+                            }
+                            else
+                            {
+                                context.Fail("invalid cert");
+                            }
+
+                            return Task.CompletedTask;
+                        },
+                        OnAuthenticationFailed = context =>
+                        {
+                            context.Fail("invalid cert");
+                            return Task.CompletedTask;
+                        }
+                    };
+                });
+            //end new
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -58,6 +88,11 @@ namespace WebApplication15
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            //new
+            app.UseCertificateForwarding();
+            app.UseAuthentication();
+            //end new
 
             app.UseRouting();
 
