@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication15.Data;
 using Microsoft.AspNetCore.Authentication.Certificate;
 
+//comment
 namespace WebApplication15
 {
     public class Startup
