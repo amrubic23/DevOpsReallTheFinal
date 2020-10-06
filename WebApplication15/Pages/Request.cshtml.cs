@@ -9,6 +9,7 @@ using Microsoft.Data.SqlClient;
 
 namespace WebApplication15.Pages
 {
+    //comment
     public class RequestModel : PageModel
     {
         public void OnGet()
