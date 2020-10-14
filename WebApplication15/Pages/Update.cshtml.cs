@@ -66,7 +66,7 @@ namespace WebApplication15.Pages
                 SqlCommand command = new SqlCommand(
                     query, connection);
                 command.Parameters.AddWithValue("@username", (String)HttpContext.Session.GetString("username"));
-                command.Parameters.AddWithValue("@password", password);
+                command.Parameters.AddWithValue("@password", encrypt.Encrypt(password));
                 connection.Open();
                 try
                 {
@@ -107,7 +107,7 @@ namespace WebApplication15.Pages
                 SqlCommand command = new SqlCommand(
                     query, connection2);
                 command.Parameters.AddWithValue("@username", (String)HttpContext.Session.GetString("username"));
-                command.Parameters.AddWithValue("@password", newPassword);
+                command.Parameters.AddWithValue("@password", encrypt.Encrypt(newPassword));
                 connection2.Open();
                 try
                 {

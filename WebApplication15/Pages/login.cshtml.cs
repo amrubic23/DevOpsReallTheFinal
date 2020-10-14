@@ -41,7 +41,7 @@ namespace WebApplication15.Pages
                     SqlCommand command = new SqlCommand(
                         query, connection);
                     command.Parameters.AddWithValue("@username", user);
-                    command.Parameters.AddWithValue("@password", pass);
+                    command.Parameters.AddWithValue("@password", encrypt.Encrypt(pass));
                     connection.Open();
                     try
                     {
