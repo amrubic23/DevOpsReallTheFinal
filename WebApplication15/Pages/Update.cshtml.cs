@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebApplication15.Pages
-{
+{//a
     public class UpdateModel : PageModel
     {
         public string Pass => (string)TempData[nameof(Pass)];
